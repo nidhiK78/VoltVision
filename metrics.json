@@ -1,0 +1,13 @@
+{
+  "model": "RandomForestRegressor",
+  "rows_used": 4000,
+  "mae_kw": 28.563,
+  "rmse_kw": 37.504,
+  "features": [
+    "ambient_temp_c",
+    "humidity_pct",
+    "solar_irradiance_wm2"
+  ],
+  "target": "target_demand_kw",
+  "note": "Metrics use a random holdout split. This is a demonstration model, not a validated operational grid forecast."
+}

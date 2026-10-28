@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>VoltVision</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- TOP NAVIGATION -->
+    <header class="topbar">
+
+        <div class="brand">
+            <div class="brand-mark">V</div>
+
+            <div>
+                <h1>VoltVision</h1>
+                <span>Microgrid Intelligence</span>
+            </div>
+        </div>
+
+
+        <nav class="navigation">
+
+            <a href="#dashboard" class="nav-link active">
+                Overview
+            </a>
+
+            <a href="#forecast" class="nav-link">
+                Demand Forecast
+            </a>
+
+            <a href="#grid-status" class="nav-link">
+                Grid Control
+            </a>
+
+            <a href="#analytics" class="nav-link">
+                Insights
+            </a>
+
+        </nav>
+
+<div class="live-status">
+    <span class="live-dot"></span>
+    DEMO MODE
+</div>
+</header>
+
+
+    <!-- MAIN APPLICATION -->
+    <main class="app">
+
+
+        <!-- =====================================
+             OVERVIEW
+        ====================================== -->
+
+        <section id="dashboard" class="view">
+
+            <div class="welcome">
+
+                <div>
+                    <p class="eyebrow">MICROGRID OVERVIEW</p>
+
+                    <h2>Today's energy picture</h2>
+
+                    <p class="description">
+                        Monitor demand, storage and grid decisions
+                        from one place.
+                    </p>
+                </div>
+
+                <div class="date-display" id="currentDate">
+                    Loading...
+                </div>
+
+            </div>
+
+
+            <!-- MAIN GRID STATUS -->
+
+            <div class="hero-grid">
+
+                <div class="load-panel">
+
+                    <div class="panel-top">
+                        <span>GRID LOAD</span>
+                        <span class="status-badge normal">
+                            NORMAL
+                        </span>
+                    </div>
+
+                    <div class="load-value">
+                        <span id="currentDemand">172</span>
+                        <small>kW</small>
+                    </div>
+
+                    <p class="muted">
+                        Current predicted demand
+                    </p>
+
+
+                    <div class="mini-stats">
+
+                        <div>
+                            <span>Peak today</span>
+                            <strong id="peakDemand">220 kW</strong>
+                        </div>
+
+                        <div>
+                            <span>Average</span>
+                            <strong id="averageDemand">165 kW</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="source-panel">
+
+                    <p class="eyebrow">ACTIVE SOURCE</p>
+
+                    <div class="source-icon">
+                        ⚡
+                    </div>
+
+                    <h3 id="gridMode">
+                        Renewable Storage
+                    </h3>
+
+                    <p>
+                        Recommended power source
+                    </p>
+
+                </div>
+
+
+                <div class="battery-panel">
+
+                    <div class="panel-top">
+                        <span>STORAGE</span>
+                        <span>AVAILABLE</span>
+                    </div>
+
+                    <div class="battery-number">
+                        <span id="batteryLevel">78</span>%
+                    </div>
+
+                    <div class="battery">
+                        <div class="battery-fill"></div>
+                    </div>
+
+                    <p class="muted">
+                        Simulated battery level
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- FORECAST PREVIEW -->
+
+            <div class="section-block">
+
+                <div class="section-heading">
+
+                    <div>
+                        <p class="eyebrow">NEXT 24 HOURS</p>
+                        <h2>Demand forecast</h2>
+                    </div>
+
+                    <a href="#forecast" class="view-link">
+                        View full forecast →
+                    </a>
+
+                </div>
+
+                <div class="forecast-preview">
+                    <canvas id="demandChart"></canvas>
+                </div>
+
+            </div>
+
+
+            <!-- LIVE TELEMETRY -->
+
+            <div class="telemetry-strip">
+
+                <div class="telemetry-title">
+                    <p class="eyebrow">LIVE TELEMETRY</p>
+                    <span>Weather inputs</span>
+                </div>
+
+
+                <div class="telemetry-item">
+
+                    <span>Temperature</span>
+
+                    <strong id="temperatureValue">
+                        29°C
+                    </strong>
+
+                </div>
+
+
+                <div class="telemetry-item">
+
+                    <span>Humidity</span>
+
+                    <strong id="humidityValue">
+                        61%
+                    </strong>
+
+                </div>
+
+
+                <div class="telemetry-item">
+
+                    <span>Solar irradiance</span>
+
+                    <strong id="solarValue">
+                        540 W/m²
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             FORECAST
+        ====================================== -->
+
+        <section id="forecast" class="view">
+
+            <div class="page-header">
+
+                <div>
+                    <p class="eyebrow">DEMAND FORECAST</p>
+
+                    <h2>24-hour prediction</h2>
+
+                    <p>
+                        Predicted electricity demand across the
+                        upcoming day.
+                    </p>
+                </div>
+
+                <div class="peak-box">
+
+                    <span>PEAK DEMAND</span>
+
+                    <strong id="forecastPeak">
+                        220 kW
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="large-chart">
+
+                <canvas id="forecastChart"></canvas>
+
+            </div>
+
+
+            <div class="forecast-note">
+
+                <span>MODEL OUTPUT</span>
+
+                <p>
+                    Live API prediction displayed for the current hour. Remaining hourly values are demo data.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             GRID CONTROL
+        ====================================== -->
+
+        <section id="grid-status" class="view">
+
+            <div class="page-header">
+
+                <div>
+                    <p class="eyebrow">GRID CONTROL</p>
+
+                    <h2>Power-source decisions</h2>
+
+                    <p>
+                        Automated recommendations based on
+                        predicted demand and time.
+                    </p>
+                </div>
+
+                <div class="control-state">
+                    CONTROLLER ACTIVE
+                </div>
+
+            </div>
+
+
+            <div class="decision-summary">
+
+                <div>
+                    <span>CURRENT SOURCE</span>
+                    <strong id="controlSource">
+                        Renewable Storage
+                    </strong>
+                </div>
+
+                <div>
+                    <span>OVERLOAD THRESHOLD</span>
+                    <strong>200 kW</strong>
+                </div>
+
+                <div>
+                    <span>STORAGE TRIGGER</span>
+                    <strong>&gt; 160 kW</strong>
+                </div>
+
+            </div>
+
+
+            <div class="decision-list">
+
+                <div class="decision-header">
+                    <span>TIME</span>
+                    <span>DEMAND</span>
+                    <span>SOURCE</span>
+                    <span>STATUS</span>
+                </div>
+
+                <div id="decisionTable"></div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             ANALYTICS
+        ====================================== -->
+
+        <section id="analytics" class="view">
+
+            <div class="page-header">
+
+                <div>
+                    <p class="eyebrow">ENERGY INSIGHTS</p>
+
+                    <h2>What the data says</h2>
+
+                    <p>
+                        A quick view of demand behaviour across
+                        the forecast window.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="insight-grid">
+
+                <div class="insight">
+
+                    <span class="insight-label">
+                        PEAK DEMAND
+                    </span>
+
+                    <strong id="analyticsPeak">
+                        220 kW
+                    </strong>
+
+                    <p>
+                        Highest predicted load
+                    </p>
+
+                </div>
+
+
+                <div class="insight">
+
+                    <span class="insight-label">
+                        AVERAGE DEMAND
+                    </span>
+
+                    <strong id="analyticsAverage">
+                        165 kW
+                    </strong>
+
+                    <p>
+                        Average forecasted load
+                    </p>
+
+                </div>
+
+
+                <div class="insight">
+
+                    <span class="insight-label">
+                        CRITICAL EVENTS
+                    </span>
+
+                    <strong id="criticalAlerts">
+                        2
+                    </strong>
+
+                    <p>
+                        Predictions at or above 200 kW
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================
+             DATA UPLOAD
+        ====================================== -->
+
+        <section class="upload-section">
+
+            <div>
+
+                <p class="eyebrow">DATA INPUT</p>
+
+                <h2>Load telemetry</h2>
+
+                <p>
+                    Upload hourly weather data to prepare
+                    VoltVision for forecasting.
+                </p>
+
+            </div>
+
+
+            <label class="upload-button">
+
+                Choose CSV
+
+                <input
+                    type="file"
+                    id="csvFile"
+                    accept=".csv"
+                >
+
+            </label>
+
+        </section>
+
+
+    </main>
+
+
+    <footer>
+        VOLTVISION · Smart Energy Microgrid
+    </footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

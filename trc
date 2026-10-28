@@ -1,0 +1,145 @@
+[1mdiff --git a/.catalystrc b/.catalystrc[m
+[1mnew file mode 100644[m
+[1mindex 0000000..f04e47d[m
+[1m--- /dev/null[m
+[1m+++ b/.catalystrc[m
+[36m@@ -0,0 +1,29 @@[m
+[32m+[m[32m{[m
+[32m+[m[32m  "defaults": {[m
+[32m+[m[32m    "project": 1[m
+[32m+[m[32m  },[m
+[32m+[m[32m  "actives": {[m
+[32m+[m[32m    "project": 1,[m
+[32m+[m[32m    "env": 1[m
+[32m+[m[32m  },[m
+[32m+[m[32m  "projects": [[m
+[32m+[m[32m    {[m
+[32m+[m[32m      "idx": 1,[m
+[32m+[m[32m      "id": "91557000000013023",[m
+[32m+[m[32m      "name": "Project-Rainfall",[m
+[32m+[m[32m      "domain": {[m
+[32m+[m[32m        "id": "50047158633",[m
+[32m+[m[32m        "name": "project-rainfall-60093280894.development"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "timezone": "Asia/Kolkata",[m
+[32m+[m[32m      "env": [[m
+[32m+[m[32m        {[m
+[32m+[m[32m          "idx": 1,[m
+[32m+[m[32m          "id": "60093280894",[m
+[32m+[m[32m          "name": "Development",[m
+[32m+[m[32m          "type": 3[m
+[32m+[m[32m        }[m
+[32m+[m[32m      ][m
+[32m+[m[32m    }[m
+[32m+[m[32m  ][m
+[32m+[m[32m}[m
+[1mdiff --git a/catalyst.json b/catalyst.json[m
+[1mnew file mode 100644[m
+[1mindex 0000000..2965120[m
+[1m--- /dev/null[m
+[1m+++ b/catalyst.json[m
+[36m@@ -0,0 +1,8 @@[m
+[32m+[m[32m﻿{[m
+[32m+[m[32m    "appsail":  [[m
+[32m+[m[32m                    {[m
+[32m+[m[32m                        "source":  "appsail_deploy",[m
+[32m+[m[32m                        "name":  "voltvision-api"[m
+[32m+[m[32m                    }[m
+[32m+[m[32m                ][m
+[32m+[m[32m}[m
+[1mdiff --git a/get_zoho_token.py b/get_zoho_token.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..2c82b4e[m
+[1m--- /dev/null[m
+[1m+++ b/get_zoho_token.py[m
+[36m@@ -0,0 +1,29 @@[m
+[32m+[m[32mimport getpass[m
+[32m+[m[32mimport requests[m
+[32m+[m[32mimport json[m
+[32m+[m
+[32m+[m[32murl = "https://accounts.zoho.in/oauth/v2/token"[m
+[32m+[m
+[32m+[m[32mclient_id = input("Enter Client ID: ").strip()[m
+[32m+[m[32mclient_secret = getpass.getpass("Enter Client Secret: ")[m
+[32m+[m[32mgrant_code = getpass.getpass("Enter fresh Grant Code: ")[m
+[32m+[m
+[32m+[m[32mresponse = requests.post([m
+[32m+[m[32m    url,[m
+[32m+[m[32m    data={[m
+[32m+[m[32m        "grant_type": "authorization_code",[m
+[32m+[m[32m        "client_id": client_id,[m
+[32m+[m[32m        "client_secret": client_secret,[m
+[32m+[m[32m        "code": grant_code,[m
+[32m+[m[32m    },[m
+[32m+[m[32m    timeout=30,[m
+[32m+[m[32m)[m
+[32m+[m
+[32m+[m[32mdata = response.json()[m
+[32m+[m
+[32m+[m[32mif response.ok and "access_token" in data:[m
+[32m+[m[32m    print("\nSUCCESS! Tokens generated.")[m
+[32m+[m[32m    print(json.dumps(data, indent=2))[m
+[32m+[m[32melse:[m
+[32m+[m[32m    print("\nToken exchange failed:")[m
+[32m+[m[32m    print(json.dumps(data, indent=2))[m
+\ No newline at end of file[m
+[1mdiff --git a/refresh_zoho_token.py b/refresh_zoho_token.py[m
+[1mnew file mode 100644[m
+[1mindex 0000000..1b51597[m
+[1m--- /dev/null[m
+[1m+++ b/refresh_zoho_token.py[m
+[36m@@ -0,0 +1,54 @@[m
+[32m+[m
+[32m+[m[32mimport os[m
+[32m+[m[32mfrom pathlib import Path[m
+[32m+[m
+[32m+[m[32mimport requests[m
+[32m+[m[32mfrom dotenv import dotenv_values, set_key[m
+[32m+[m
+[32m+[m[32mBASE_DIR = Path(__file__).resolve().parent[m
+[32m+[m[32mENV_FILE = BASE_DIR / ".env"[m
+[32m+[m
+[32m+[m[32mvalues = dotenv_values(ENV_FILE)[m
+[32m+[m
+[32m+[m[32maccounts_url = values.get([m
+[32m+[m[32m    "ZOHO_ACCOUNTS_URL",[m
+[32m+[m[32m    "https://accounts.zoho.in"[m
+[32m+[m[32m).rstrip("/")[m
+[32m+[m
+[32m+[m[32mrefresh_token = values.get("ZOHO_REFRESH_TOKEN")[m
+[32m+[m[32mclient_id = values.get("ZOHO_CLIENT_ID")[m
+[32m+[m[32mclient_secret = values.get("ZOHO_CLIENT_SECRET")[m
+[32m+[m
+[32m+[m[32mif not all([refresh_token, client_id, client_secret]):[m
+[32m+[m[32m    print("ERROR: Missing OAuth configuration in .env")[m
+[32m+[m[32m    raise SystemExit(1)[m
+[32m+[m
+[32m+[m[32mtry:[m
+[32m+[m[32m    response = requests.post([m
+[32m+[m[32m        f"{accounts_url}/oauth/v2/token",[m
+[32m+[m[32m        data={[m
+[32m+[m[32m            "grant_type": "refresh_token",[m
+[32m+[m[32m            "refresh_token": refresh_token,[m
+[32m+[m[32m            "client_id": client_id,[m
+[32m+[m[32m            "client_secret": client_secret,[m
+[32m+[m[32m        },[m
+[32m+[m[32m        timeout=20,[m
+[32m+[m[32m    )[m
+[32m+[m
+[32m+[m[32m    data = response.json()[m
+[32m+[m
+[32m+[m[32m    if response.ok and data.get("access_token"):[m
+[32m+[m[32m        set_key([m
+[32m+[m[32m            str(ENV_FILE),[m
+[32m+[m[32m            "ZOHO_OAUTH_TOKEN",[m
+[32m+[m[32m            data["access_token"],[m
+[32m+[m[32m        )[m
+[32m+[m[32m        print("SUCCESS: New access token saved to .env.")[m
+[32m+[m[32m        print("Token value was not displayed.")[m
+[32m+[m[32m    else:[m
+[32m+[m[32m        print("Token refresh failed.")[m
+[32m+[m[32m        print("HTTP status:", response.status_code)[m
+[32m+[m[32m        print("Zoho error:", data.get("error", "Unknown error"))[m
+[32m+[m
+[32m+[m[32mexcept requests.RequestException as exc:[m
+[32m+[m[32m    print("Network error:", type(exc).__name__)[m

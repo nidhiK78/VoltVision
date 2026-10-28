@@ -1,0 +1,15 @@
+﻿.env
+.env.*
+!.env.example
+.catalystrc
+get_zoho_token.py
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.log
+*.zip
+appsail_package/
+appsail_deploy/
+YAPGPT_Submission/
