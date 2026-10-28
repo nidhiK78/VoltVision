@@ -116,25 +116,33 @@ Activate it on Windows PowerShell:
 pip install -r requirements.txt
 ```
 
-### 4. Start the backend
+### 4. Start the Backend
 
-If `app.py` defines the FastAPI application as `app`, run:
+From the project root directory, run:
 
 ```bash
-uvicorn app:app --reload
+python -m uvicorn app:app --host 127.0.0.1 --port 8000
 ```
 
-The API should be available at `http://127.0.0.1:8000` while the local Uvicorn server is running.
+Keep the terminal open while using the backend.
 
-To verify that the backend is responding, open `http://127.0.0.1:8000/` in your browser. If the connection is refused, check that the terminal running Uvicorn is still open and has no startup errors.
+Verify that the API is running by opening these addresses in your browser:
 
-The deployed backend is available at:
-https://voltvision-api-50047158633.development.catalystappsail.in/
-### 5. Open the frontend
+- **Backend health check:** http://127.0.0.1:8000/
+- **Model evaluation metrics:** http://127.0.0.1:8000/metrics
+- **Interactive API documentation:** http://127.0.0.1:8000/docs
 
-Open `frontend/index.html` in your browser.
+The local API is available only while the backend server is running.
 
-Some frontend features may require the backend to be running and the API URL to be configured correctly. Check the existing application configuration if the dashboard does not load its data.
+**Deployed backend:** https://voltvision-api-50047158633.development.catalystappsail.in/
+
+### 5. Open the Frontend
+
+Open `frontend/index.html` in your browser to view the dashboard.
+
+If the dashboard cannot retrieve backend data, check the API URL configured in `frontend/script.js` and ensure the backend is running.
+
+For local development, the frontend must be configured to use the local API. For the deployed dashboard, it should use the deployed backend URL.
 
 ## 📁 Project Structure
 
