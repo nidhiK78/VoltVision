@@ -124,8 +124,12 @@ If `app.py` defines the FastAPI application as `app`, run:
 uvicorn app:app --reload
 ```
 
-The API should be available at `http://127.0.0.1:8000`.
+The API should be available at `http://127.0.0.1:8000` while the local Uvicorn server is running.
 
+To verify that the backend is responding, open `http://127.0.0.1:8000/` in your browser. If the connection is refused, check that the terminal running Uvicorn is still open and has no startup errors.
+
+The deployed backend is available at:
+https://voltvision-api-50047158633.development.catalystappsail.in/
 ### 5. Open the frontend
 
 Open `frontend/index.html` in your browser.
